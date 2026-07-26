@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
+.font-quran {
+  font-family: 'Amiri Quran', 'Amiri', 'Scheherazade New', serif !important;
+  line-height: 2.2 !important;
+  direction: rtl;
+}
 *,
 :before,
 :after {
@@ -3388,4 +3394,52 @@ h6 {
 }
 [data-side="right"] .\[\[data-side\=right\]_\&\]\:cursor-e-resize {
   cursor: e-resize;
+}
+
+/* Totally hide video play triangle icon and all media control overlays on mobile phones (iOS/Android/WebKit/Blink) */
+video::-webkit-media-controls {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+video::-webkit-media-controls-overlay-play-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+video::-webkit-media-controls-play-button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+video::-webkit-media-controls-panel {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+video::-webkit-media-controls-enclosure {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+video::-apple-media-controls {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+video {
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  outline: none !important;
+  pointer-events: none !important;
 }

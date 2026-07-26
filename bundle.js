@@ -15969,7 +15969,7 @@ function Qo(e) {
 }
 function bD(e) {
   let {
-    basename: t = "/new_prem3/",
+    basename: t = (window.location.pathname.startsWith("/alaa-moubarak-wedding") ? "/alaa-moubarak-wedding/" : (window.location.pathname.startsWith("/new_prem3") ? "/new_prem3/" : "/")),
     children: n = null,
     location: r,
     navigationType: s = Ir.Pop,
@@ -21553,27 +21553,246 @@ function pF(e) {
   const [t, n, r] = e.split("-").map(Number);
   return `${["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"][n - 1]} ${r}, ${t}`;
 }
+function FestivalCelebration({ onEnd: e }) {
+  const t = v.useRef(null);
+  v.useEffect(() => {
+    const n = t.current;
+    if (!n) return;
+    const r = n.getContext("2d");
+    let s = window.innerWidth,
+      i = window.innerHeight;
+    n.width = s;
+    n.height = i;
+    const o = [],
+      a = ["#d4af37", "#f3e5ab", "#ffd700", "#e6c280", "#ffffff", "#c5a059", "#ffb6c1"],
+      d = (c, l, u = 60) => {
+        for (let h = 0; h < u; h++) {
+          const f = Math.random() * Math.PI * 2,
+            x = Math.random() * 8 + 2;
+          o.push({
+            x: c,
+            y: l,
+            vx: Math.cos(f) * x * (Math.random() * 0.8 + 0.4),
+            vy: Math.sin(f) * x * (Math.random() * 0.8 + 0.4) - 3,
+            size: Math.random() * 6 + 3,
+            color: a[Math.floor(Math.random() * a.length)],
+            alpha: 1,
+            gravity: 0.12,
+            drag: 0.97,
+            rot: Math.random() * 360,
+            vRot: (Math.random() - 0.5) * 12,
+            type: Math.random() > 0.3 ? "rect" : "circle",
+          });
+        }
+      };
+    d(s * 0.5, i * 0.4, 90);
+    setTimeout(() => { d(s * 0.25, i * 0.45, 60); d(s * 0.75, i * 0.45, 60); }, 350);
+    setTimeout(() => { d(s * 0.5, i * 0.35, 80); }, 700);
+    let g = null,
+      m = Date.now();
+    const y = () => {
+      r.clearRect(0, 0, s, i);
+      const c = Date.now() - m;
+      for (let l = o.length - 1; l >= 0; l--) {
+        const u = o[l];
+        u.x += u.vx;
+        u.y += u.vy;
+        u.vy += u.gravity;
+        u.vx *= u.drag;
+        u.vy *= u.drag;
+        u.rot += u.vRot;
+        if (c > 1600) {
+          u.alpha -= 0.03;
+        }
+        if (u.alpha <= 0) {
+          o.splice(l, 1);
+          continue;
+        }
+        r.save();
+        r.globalAlpha = Math.max(0, u.alpha);
+        r.translate(u.x, u.y);
+        r.rotate((u.rot * Math.PI) / 180);
+        r.fillStyle = u.color;
+        if (u.type === "circle") {
+          r.beginPath();
+          r.arc(0, 0, u.size / 2, 0, Math.PI * 2);
+          r.fill();
+        } else {
+          r.fillRect(-u.size / 2, -u.size / 2, u.size, u.size * 0.6);
+        }
+        r.restore();
+      }
+      if (c < 2400 && o.length > 0) {
+        g = requestAnimationFrame(y);
+      } else {
+        e && e();
+      }
+    };
+    g = requestAnimationFrame(y);
+    const b = () => {
+      s = window.innerWidth;
+      i = window.innerHeight;
+      n.width = s;
+      n.height = i;
+    };
+    window.addEventListener("resize", b);
+    return () => {
+      g && cancelAnimationFrame(g);
+      window.removeEventListener("resize", b);
+    };
+  }, []);
+  return p.jsx("canvas", {
+    ref: t,
+    className: "fixed inset-0 z-50 pointer-events-none w-full h-full",
+  });
+}
+function ScratchSealItem({ label: e, value: t, onScratch: w }) {
+  const n = v.useRef(null),
+    [r, s] = v.useState(!1),
+    [i, o] = v.useState(!1),
+    a = v.useRef(0);
+  v.useEffect(() => {
+    const c = n.current;
+    if (!c) return;
+    const l = c.getContext("2d"),
+      u = new Image();
+    u.src = "./assets/gold-seal.png";
+    u.onload = () => {
+      l.clearRect(0, 0, c.width, c.height);
+      l.save();
+      l.beginPath();
+      l.arc(c.width / 2, c.height / 2, c.width / 2, 0, Math.PI * 2);
+      l.clip();
+      l.drawImage(u, 0, 0, c.width, c.height);
+      l.restore();
+    };
+  }, []);
+  v.useEffect(() => {
+    if (r && w) w();
+  }, [r]);
+  const d = (c) => {
+    if (r) return;
+    const l = n.current;
+    if (!l) return;
+    const u = l.getBoundingClientRect(),
+      g = c.touches && c.touches.length > 0 ? c.touches[0] : c,
+      h = ((g.clientX - u.left) / u.width) * 160,
+      f = ((g.clientY - u.top) / u.height) * 160,
+      x = l.getContext("2d");
+    x.globalCompositeOperation = "destination-out";
+    x.beginPath();
+    x.arc(h, f, 24, 0, Math.PI * 2);
+    x.fill();
+    a.current += 1;
+    if (a.current > 15) {
+      s(!0);
+    }
+  };
+  return p.jsxs("div", {
+    className: "relative flex flex-col items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-transparent border border-amber-500/30 select-none overflow-hidden transition-transform hover:scale-105",
+    children: [
+      p.jsxs("div", {
+        className: "flex flex-col items-center justify-center text-center z-0 px-2",
+        children: [
+          p.jsx("span", {
+            className: "text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-foreground/80 font-body mb-1 drop-shadow-sm",
+            children: e,
+          }),
+          p.jsx("span", {
+            className: "text-xl md:text-2xl font-serif font-bold text-foreground tracking-wide drop-shadow",
+            children: t,
+          }),
+        ],
+      }),
+      p.jsx("canvas", {
+        ref: n,
+        width: 160,
+        height: 160,
+        className: "absolute inset-0 w-full h-full z-10 cursor-pointer touch-none transition-opacity duration-700 " + (r ? "opacity-0 pointer-events-none" : "opacity-100"),
+        onMouseDown: () => o(!0),
+        onMouseUp: () => o(!1),
+        onMouseLeave: () => o(!1),
+        onMouseMove: (c) => { i && d(c); },
+        onTouchStart: (c) => { o(!0); d(c); },
+        onTouchEnd: () => o(!1),
+        onTouchMove: (c) => { d(c); },
+        onClick: (c) => { d(c); a.current += 6; if (a.current > 15) s(!0); },
+      }),
+    ],
+  });
+}
 function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
-  const i = pF(n);
+  const [yr, mo, da] = "2026-11-20".split("-").map(Number),
+    moStr = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][mo - 1],
+    daStr = da < 10 ? "0" + da : da,
+    [cCnt, setCCnt] = v.useState(0),
+    [showCel, setShowCel] = v.useState(!1),
+    vRef = v.useRef(null),
+    handleScratch = () => {
+      setCCnt((prev) => {
+        const nxt = prev + 1;
+        if (nxt === 3) {
+          setShowCel(!0);
+        }
+        return nxt;
+      });
+    };
+  v.useEffect(() => {
+    const el = vRef.current;
+    if (!el) return;
+    el.muted = !0;
+    el.defaultMuted = !0;
+    el.playsInline = !0;
+    el.setAttribute("muted", "");
+    el.setAttribute("playsinline", "");
+    el.setAttribute("webkit-playsinline", "true");
+    const tryPlay = () => {
+      if (el.paused) {
+        el.play().catch(() => {});
+      }
+    };
+    tryPlay();
+    window.addEventListener("touchstart", tryPlay, { passive: !0 });
+    window.addEventListener("click", tryPlay, { passive: !0 });
+    window.addEventListener("scroll", tryPlay, { passive: !0 });
+    return () => {
+      window.removeEventListener("touchstart", tryPlay);
+      window.removeEventListener("click", tryPlay);
+      window.removeEventListener("scroll", tryPlay);
+    };
+  }, []);
   return p.jsxs("section", {
     className: "relative min-h-screen flex items-start justify-center pt-[42vh] overflow-hidden bg-ivory",
     children: [
       p.jsx("div", {
         className: "absolute inset-0",
         children: p.jsx("video", {
+          ref: vRef,
           src: P_,
           poster: fF,
           autoPlay: !0,
           muted: !0,
           loop: !0,
           playsInline: !0,
+          controls: !1,
+          "webkit-playsinline": "true",
+          "x5-playsinline": "true",
+          disablePictureInPicture: !0,
           preload: "auto",
-          className: "w-full h-full object-cover object-center",
+          className: "w-full h-full object-cover object-center pointer-events-none",
         }),
       }),
       p.jsxs("div", {
         className: "relative z-10 flex flex-col items-center text-center px-6 pt-[70px]",
         children: [
+          p.jsx(X.div, {
+            initial: { opacity: 0, y: 20 },
+            animate: { opacity: s ? 0 : 1, y: s ? 20 : 0 },
+            transition: { duration: 0.8, delay: 0.15 },
+            className: "font-quran text-base md:text-xl lg:text-2xl text-center mb-4 max-w-3xl mx-auto px-4 leading-loose text-foreground/90",
+            dir: "rtl",
+            children: "﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُم أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾",
+          }),
           p.jsx(X.p, {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: s ? 0 : 1, y: s ? 20 : 0 },
@@ -21588,12 +21807,26 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
             className: "font-script text-6xl md:text-8xl mb-3 text-foreground",
             children: [e, " & ", t],
           }),
-          p.jsx(X.p, {
+          p.jsxs(X.div, {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: s ? 0 : 1, y: s ? 20 : 0 },
             transition: { duration: 0.8, delay: 0.9 },
-            className: "text-sm md:text-base tracking-[0.2em] uppercase font-body text-foreground/70",
-            children: i,
+            className: "flex flex-col items-center justify-center my-4",
+            children: [
+              p.jsxs("div", {
+                className: "flex items-center justify-center gap-3 md:gap-6",
+                children: [
+                  p.jsx(ScratchSealItem, { label: "DAY", value: daStr, onScratch: handleScratch }),
+                  p.jsx(ScratchSealItem, { label: "MONTH", value: moStr, onScratch: handleScratch }),
+                  p.jsx(ScratchSealItem, { label: "YEAR", value: yr, onScratch: handleScratch }),
+                ],
+              }),
+              p.jsx("p", {
+                className: "text-xs md:text-sm tracking-[0.25em] uppercase font-body mt-4 " + (cCnt === 3 ? "text-amber-500 font-bold animate-bounce" : "text-foreground/80 animate-pulse"),
+                children: cCnt === 3 ? "🎉 The Date is Revealed! We Can't Wait to Celebrate with You! 🎉" : "✨ Scratch the gold seals to reveal the date ✨",
+              }),
+              showCel && p.jsx(FestivalCelebration, { onEnd: () => setShowCel(!1) }),
+            ],
           }),
         ],
       }),
@@ -21601,7 +21834,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
   });
 }
 function gF(e) {
-  const [t, n, r] = e.split("-").map(Number);
+  const [t, n, r] = "2026-11-20".split("-").map(Number);
   return Date.UTC(t, n - 1, r, 15, 0, 0);
 }
 function yF({ targetDate: e }) {
@@ -21822,7 +22055,7 @@ function xF({
               p.jsxs(Bt, {
                 size: "sm",
                 className: "gap-2 bg-sage-dark text-white hover:bg-sage-dark/90 border-none",
-                onClick: () => o("Lucía & Felipe's Wedding", r, a, i),
+                onClick: () => o("Mahmoud & Alaa's Wedding", r, a, i),
                 children: [p.jsx($A, { className: "w-4 h-4" }), "Calendar"],
               }),
             ],
@@ -21834,12 +22067,12 @@ function xF({
 }
 const A_ = "./assets/couple-dancing-D8lPNoP4.png",
   bF = [
-    { time: "17:00", title: "Arrival & Welcome Drinks", description: "Reception and welcome cocktails at the villa" },
-    { time: "17:30", title: "Ceremony", description: "The most special moment of the day" },
-    { time: "18:00", title: "Cocktail Hour & Dinner", description: "Al fresco dining under the stars" },
-    { time: "21:30", title: "Party", description: "Let's dance the night away!" },
+    { time: "5:00 PM", title: "Arrival & Welcome Drinks", description: "Reception and welcome cocktails at the villa" },
+    { time: "5:30 PM", title: "Ceremony", description: "The most special moment of the day" },
+    { time: "6:00 PM", title: "Cocktail Hour & Dinner", description: "Al fresco dining under the stars" },
+    { time: "9:30 PM", title: "Party", description: "Let's dance the night away!" },
     {
-      time: "02:00",
+      time: "2:00 AM",
       title: "Last Dance",
       description: `Farewell and
 beautiful memories`,
@@ -21868,7 +22101,7 @@ function SF({ event: e, index: t }) {
         className: "text-center py-1 transition-all duration-500",
         style: { opacity: r ? 1 : 0.35, transform: r ? "scale(1.05)" : "scale(1)" },
         children: [
-          t === 0 &&
+          e.time &&
             p.jsx("p", {
               className: "text-sage-dark/60 font-body text-sm tracking-widest uppercase mb-1",
               children: e.time,
@@ -29714,7 +29947,7 @@ function P4({ enabled: e }) {
                                       children: "Beneficiary:",
                                     }),
                                     p.jsx("br", {}),
-                                    "Lucía & Felipe",
+                                    "Mahmoud & Alaa",
                                   ],
                                 }),
                                 p.jsxs("div", {
@@ -30542,11 +30775,11 @@ function lB({ attendance: e }) {
         "VERSION:2.0",
         "PRODID:-//TheDigitalYes//Wedding//EN",
         "BEGIN:VEVENT",
-        "DTSTART;TZID=Europe/Rome:20270918T170000",
-        "DTEND;TZID=Europe/Rome:20270919T020000",
-        "SUMMARY:Lucía & Felipe's Wedding",
+        "DTSTART;TZID=Europe/Rome:20261120T170000",
+        "DTEND;TZID=Europe/Rome:20261121T020000",
+        "SUMMARY:Mahmoud & Alaa's Wedding",
         "LOCATION:Villa Montalcino, Tuscany",
-        "DESCRIPTION:Lucía & Felipe's Wedding Celebration",
+        "DESCRIPTION:Mahmoud & Alaa's Wedding Celebration",
         "END:VEVENT",
         "END:VCALENDAR",
       ].join(`\r
@@ -30554,7 +30787,7 @@ function lB({ attendance: e }) {
       c = new Blob([l], { type: "text/calendar;charset=utf-8" }),
       u = URL.createObjectURL(c),
       d = document.createElement("a");
-    ((d.href = u), (d.download = "wedding-lucia-felipe.ics"), d.click(), URL.revokeObjectURL(u));
+    ((d.href = u), (d.download = "wedding-mahmoud-alaa.ics"), d.click(), URL.revokeObjectURL(u));
   };
   return e === "no"
     ? p.jsx("section", {
@@ -30571,7 +30804,7 @@ function lB({ attendance: e }) {
               className: "text-sage-dark/80 font-body text-lg leading-relaxed",
               children: "We're so sorry you can't join us. You'll be in our thoughts on this very special day.",
             }),
-            p.jsx("p", { className: "text-sage-dark/60 font-script text-2xl mt-8", children: "— Lucía & Felipe" }),
+            p.jsx("p", { className: "text-sage-dark/60 font-script text-2xl mt-8", children: "— Mahmoud & Alaa" }),
           ],
         }),
       })
@@ -30613,7 +30846,7 @@ function lB({ attendance: e }) {
                         }),
                         p.jsx("p", {
                           className: "text-sage-dark/80 font-body text-base md:text-lg",
-                          children: "We look forward to seeing you on September 18th at Villa Montalcino.",
+                          children: "We look forward to seeing you on November 20th at 5:00 PM at Villa Montalcino.",
                         }),
                       ],
                     }),
@@ -30622,7 +30855,7 @@ function lB({ attendance: e }) {
                       animate: { opacity: 1 },
                       transition: { duration: 0.8, delay: 1.2 },
                       className: "text-sage-dark/60 font-script text-2xl md:text-3xl mt-10",
-                      children: "— Lucía & Felipe",
+                      children: "— Mahmoud & Alaa",
                     }),
                     p.jsxs(X.div, {
                       initial: { opacity: 0, y: 20 },
@@ -31204,9 +31437,14 @@ const fB = "./assets/watermark-DICa3eBu.png",
   JC = "./assets/intro-poster-BaLFALiu.jpg",
   mB = ({ onEnter: e, onInteraction: t }) => {
     const [n, r] = v.useState("idle"),
-      s = v.useRef(null);
+      s = v.useRef(null),
+      w = v.useRef(null);
     v.useEffect(() => {
       const u = s.current;
+      u && ((u.preload = "auto"), u.load());
+    }, []);
+    v.useEffect(() => {
+      const u = w.current;
       u && ((u.preload = "auto"), u.load());
     }, []);
     const i = () => {
@@ -31225,30 +31463,56 @@ const fB = "./assets/watermark-DICa3eBu.png",
             }));
       },
       o = () => {
-        r("playing");
+        n === "loading" && r("playing");
       },
       a = () => {
         r("idle");
       },
       l = () => {
+        r("reveal");
+        const u = w.current;
+        u && u.play().catch(() => { r("fading"); });
+      },
+      g = () => {
         r("fading");
       },
       c = () => {
         n === "fading" && e();
       };
-    return p.jsxs("div", {
+    return p.jsxs(X.div, {
       className: "fixed inset-0 z-50 cursor-pointer bg-ivory",
       onClick: i,
+      animate: { opacity: n === "fading" ? 0 : 1 },
+      transition: { duration: n === "fading" ? 1.5 : 0, ease: "easeInOut" },
+      onAnimationComplete: () => { n === "fading" && e(); },
       children: [
         p.jsx("video", {
           ref: s,
           src: YC,
-          className: "absolute inset-0 h-full w-full object-cover",
-          style: { opacity: n === "idle" || n === "loading" ? 0 : 1 },
+          className: "absolute inset-0 h-full w-full object-cover pointer-events-none",
+          style: { opacity: n === "playing" ? 1 : 0 },
           onPlaying: o,
           onEnded: l,
           onError: a,
           playsInline: !0,
+          controls: !1,
+          "webkit-playsinline": "true",
+          "x5-playsinline": "true",
+          disablePictureInPicture: !0,
+          muted: !0,
+          preload: "auto",
+        }),
+        p.jsx("video", {
+          ref: w,
+          src: "./assets/reveal_video.mp4",
+          className: "absolute inset-0 h-full w-full object-cover pointer-events-none",
+          style: { opacity: n === "reveal" || n === "fading" ? 1 : 0 },
+          onEnded: g,
+          playsInline: !0,
+          controls: !1,
+          "webkit-playsinline": "true",
+          "x5-playsinline": "true",
+          disablePictureInPicture: !0,
           muted: !0,
           preload: "auto",
         }),
@@ -31260,17 +31524,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
             loading: "eager",
             fetchPriority: "high",
           }),
-        p.jsx(Hr, {
-          children:
-            n === "fading" &&
-            p.jsx(X.div, {
-              className: "absolute inset-0 z-10 bg-ivory",
-              initial: { opacity: 0 },
-              animate: { opacity: 1 },
-              transition: { duration: 1.2, ease: "easeInOut" },
-              onAnimationComplete: c,
-            }),
-        }),
+
         n === "idle" &&
           p.jsx(X.p, {
             initial: { opacity: 0 },
@@ -31296,11 +31550,15 @@ const fB = "./assets/watermark-DICa3eBu.png",
 function gB() {
   return $m({
     queryKey: ["wedding-settings"],
-    queryFn: async () => {
-      const { data: e, error: t } = await Ct.from("wedding_settings").select("*").maybeSingle();
-      if (t) throw t;
-      return e;
-    },
+    queryFn: async () => ({
+      couple_name_1: "Mahmoud",
+      couple_name_2: "Alaa",
+      wedding_date: "2026-11-20",
+      hero_subtitle: "We are getting married",
+      banquet_location: "Villa Montalcino",
+      banquet_address: null,
+      banquet_maps_url: null,
+    }),
   });
 }
 const yB = "./assets/hero-illustration-BQEp2DxL.jpg",
@@ -31376,10 +31634,11 @@ const MB = () => {
     a = () => {
       i.current && ((i.current.muted = !i.current.muted), s(!r));
     },
-    l = e || {
-      couple_name_1: "Elisa",
-      couple_name_2: "Jhon",
-      wedding_date: "2027-09-18",
+    l = {
+      ...(e || {}),
+      couple_name_1: "Mahmoud",
+      couple_name_2: "Alaa",
+      wedding_date: "2026-11-20",
       hero_subtitle: "We are getting married",
       banquet_location: "Villa Montalcino",
       banquet_address: null,
