@@ -21954,7 +21954,7 @@ Bt.displayName = "Button";
 const vF = "./assets/string-lights-DfoJYed-.png",
   wF = "./assets/ornate-badge-2PyCLI0e.png";
 function xF({
-  location: e = "Villa Montalcino",
+  location: e = "Rehana Garden",
   address: t,
   mapsUrl: n,
   startTime: r = "17:00",
@@ -21985,8 +21985,8 @@ function xF({
         T = document.createElement("a");
       ((T.href = k), (T.download = "wedding.ics"), T.click(), URL.revokeObjectURL(k));
     },
-    a = e || "Villa Montalcino",
-    l = n || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(a + (t ? ", " + t : ""))}`;
+    a = e || "Rehana Garden",
+    l = n || "https://maps.app.goo.gl/qSXBCoZGAvwcANwU8";
   return p.jsxs("section", {
     className: "bg-ivory",
     children: [
@@ -30792,7 +30792,7 @@ function lB({ attendance: e }) {
         "DTSTART;TZID=Europe/Rome:20261120T170000",
         "DTEND;TZID=Europe/Rome:20261121T020000",
         "SUMMARY:Mahmoud & Alaa's Wedding",
-        "LOCATION:Villa Montalcino, Tuscany",
+        "LOCATION:Rehana Garden",
         "DESCRIPTION:Mahmoud & Alaa's Wedding Celebration",
         "END:VEVENT",
         "END:VCALENDAR",
@@ -30860,7 +30860,7 @@ function lB({ attendance: e }) {
                         }),
                         p.jsx("p", {
                           className: "text-sage-dark/80 font-body text-base md:text-lg",
-                          children: "We look forward to seeing you on November 20th at 5:00 PM at Villa Montalcino.",
+                          children: "We look forward to seeing you on November 20th at 5:00 PM at Rehana Garden.",
                         }),
                       ],
                     }),
@@ -31305,7 +31305,7 @@ function cB() {
                           onChange: (N) => c(N.target.value),
                           className:
                             "mt-2 bg-ivory border-sage/30 text-sage-dark placeholder:text-sage-dark/50 focus:border-sage-dark",
-                          placeholder: "e.g. Hotel Borgo Antico, Montalcino area...",
+                          placeholder: "e.g. Hotel near Rehana Garden...",
                           maxLength: 200,
                         }),
                       ],
@@ -31569,9 +31569,9 @@ function gB() {
       couple_name_2: "Alaa",
       wedding_date: "2026-11-20",
       hero_subtitle: "We are getting married",
-      banquet_location: "Villa Montalcino",
-      banquet_address: null,
-      banquet_maps_url: null,
+      banquet_location: "Rehana Garden",
+      banquet_address: "Rehana Garden",
+      banquet_maps_url: "https://maps.app.goo.gl/qSXBCoZGAvwcANwU8",
     }),
   });
 }
@@ -31654,9 +31654,9 @@ const MB = () => {
       couple_name_2: "Alaa",
       wedding_date: "2026-11-20",
       hero_subtitle: "We are getting married",
-      banquet_location: "Villa Montalcino",
-      banquet_address: null,
-      banquet_maps_url: null,
+      banquet_location: "Rehana Garden",
+      banquet_address: "Rehana Garden",
+      banquet_maps_url: "https://maps.app.goo.gl/qSXBCoZGAvwcANwU8",
     };
   return p.jsxs(p.Fragment, {
     children: [
