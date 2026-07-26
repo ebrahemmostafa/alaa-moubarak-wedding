@@ -21969,7 +21969,7 @@ function xF({
         E = [
           "BEGIN:VCALENDAR",
           "VERSION:2.0",
-          "PRODID:-//TheDigitalYes//Wedding//EN",
+          "PRODID:-//Ajwaa//Wedding//EN",
           "BEGIN:VEVENT",
           `DTSTART;TZID=Europe/Rome:${w}`,
           `DTEND;TZID=Europe/Rome:${S}`,
@@ -30786,7 +30786,7 @@ function lB({ attendance: e }) {
     const l = [
         "BEGIN:VCALENDAR",
         "VERSION:2.0",
-        "PRODID:-//TheDigitalYes//Wedding//EN",
+        "PRODID:-//Ajwaa//Wedding//EN",
         "BEGIN:VEVENT",
         "DTSTART;TZID=Europe/Rome:20261120T170000",
         "DTEND;TZID=Europe/Rome:20261120T230000",
@@ -31403,11 +31403,11 @@ function hB({ name1: e, name2: t, date: n }) {
             "Made with love by",
             " ",
             p.jsx("a", {
-              href: "https://thedigitalyes.com",
+              href: "https://ajwa2-collection.vercel.app/",
               target: "_blank",
               rel: "noopener noreferrer",
               className: "underline hover:text-[#797f5c]/80 transition-colors font-semibold",
-              children: "The Digital Yes",
+              children: "Ajwaa",
             }),
           ],
         }),
