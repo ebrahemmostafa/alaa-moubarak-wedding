@@ -31692,7 +31692,6 @@ const MB = () => {
           p.jsx(EF, {}),
           p.jsx(_F, {}),
           p.jsx(T4, {}),
-          p.jsx(P4, { enabled: !0 }),
           p.jsx(cB, {}),
           p.jsx(hB, { name1: l.couple_name_1, name2: l.couple_name_2, date: l.wedding_date }),
         ],
