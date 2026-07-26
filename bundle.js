@@ -21803,7 +21803,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: s ? 0 : 1, y: s ? 20 : 0 },
             transition: { duration: 0.8, delay: 0.15 },
-            className: "font-quran text-[11px] sm:text-xs md:text-[13px] text-center mb-5 max-w-lg mx-auto px-4 leading-normal text-foreground/90",
+            className: "font-quran text-[10px] sm:text-[11px] md:text-[12px] text-center mb-5 max-w-lg mx-auto px-4 leading-normal text-foreground/90",
             dir: "rtl",
             children: "﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُم أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾",
           }),
