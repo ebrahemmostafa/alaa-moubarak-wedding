@@ -21797,7 +21797,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
         }),
       }),
       p.jsxs("div", {
-        className: "relative z-10 flex flex-col items-center text-center px-6 pt-[22px]",
+        className: "relative z-10 flex flex-col items-center text-center px-6 pt-[45px]",
         children: [
           p.jsx(X.div, {
             initial: { opacity: 0, y: 20 },
