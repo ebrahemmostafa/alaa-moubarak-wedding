@@ -21783,13 +21783,13 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
         }),
       }),
       p.jsxs("div", {
-        className: "relative z-10 flex flex-col items-center text-center px-6 pt-[35px]",
+        className: "relative z-10 flex flex-col items-center text-center px-6 pt-[15px]",
         children: [
           p.jsx(X.div, {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: s ? 0 : 1, y: s ? 20 : 0 },
             transition: { duration: 0.8, delay: 0.15 },
-            className: "font-quran text-[13px] sm:text-sm md:text-base text-center mb-1 max-w-xl mx-auto px-4 leading-normal text-foreground/90",
+            className: "font-quran text-[11px] sm:text-xs md:text-[13px] text-center mb-5 max-w-lg mx-auto px-4 leading-normal text-foreground/90",
             dir: "rtl",
             children: "﴿ وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُم مِّنْ أَنفُسِكُم أَزْوَاجًا لِّتَسْكُنُوا إِلَيْهَا وَجَعَلَ بَيْنَكُم مَّوَدَّةً وَرَحْمَةً ۚ إِنَّ فِي ذَٰلِكَ لَآيَاتٍ لِّقَوْمٍ يَتَفَكَّرُونَ ﴾",
           }),
