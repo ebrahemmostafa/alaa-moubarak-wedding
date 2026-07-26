@@ -21654,8 +21654,22 @@ function ScratchSealItem({ label: e, value: t, onScratch: w }) {
   v.useEffect(() => {
     const c = n.current;
     if (!c) return;
-    const l = c.getContext("2d"),
-      u = new Image();
+    const l = c.getContext("2d");
+    const drawDefaultSeal = () => {
+      l.clearRect(0, 0, c.width, c.height);
+      l.save();
+      l.beginPath();
+      l.arc(c.width / 2, c.height / 2, c.width / 2 - 2, 0, Math.PI * 2);
+      const grad = l.createRadialGradient(c.width / 2, c.height / 2, 10, c.width / 2, c.height / 2, c.width / 2);
+      grad.addColorStop(0, "#fef08a");
+      grad.addColorStop(0.5, "#eab308");
+      grad.addColorStop(1, "#854d0e");
+      l.fillStyle = grad;
+      l.fill();
+      l.restore();
+    };
+    drawDefaultSeal();
+    const u = new Image();
     u.src = "./assets/gold-seal.png";
     u.onload = () => {
       l.clearRect(0, 0, c.width, c.height);
