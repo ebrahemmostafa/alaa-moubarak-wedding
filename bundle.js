@@ -21811,7 +21811,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
             initial: { opacity: 0, y: 20 },
             animate: { opacity: s ? 0 : 1, y: s ? 20 : 0 },
             transition: { duration: 0.8, delay: 0.6 },
-            className: "font-script text-6xl md:text-8xl mb-3 text-foreground",
+            className: "font-script text-4xl sm:text-5xl md:text-6xl mb-3 text-foreground",
             children: [e, " & ", t],
           }),
           p.jsxs(X.div, {
