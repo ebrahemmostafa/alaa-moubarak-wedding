@@ -31560,7 +31560,18 @@ const MB = () => {
         }
       );
     }, [r, t]));
-  const o = () => {
+  const uA = () => {
+      if (i.current && i.current.paused) {
+        const el = i.current;
+        el.muted = !0;
+        el.play().then(() => {
+          el.pause();
+          el.currentTime = 0;
+          el.muted = !1;
+        }).catch(() => {});
+      }
+    },
+    o = () => {
       if (i.current && i.current.paused) {
         i.current.volume = 0;
         i.current.play().then(() => {
@@ -31595,7 +31606,7 @@ const MB = () => {
         "aria-label": r ? "Unmute" : "Mute",
         children: r ? p.jsx(ZA, { size: 20 }) : p.jsx(XA, { size: 20 }),
       }),
-      t && p.jsx(mB, { onEnter: () => n(!1), onInteraction: o }),
+      t && p.jsx(mB, { onEnter: () => { n(!1); o(); }, onInteraction: uA }),
       p.jsxs("main", {
         className: "bg-background",
         children: [
