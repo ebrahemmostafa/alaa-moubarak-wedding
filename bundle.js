@@ -22062,10 +22062,13 @@ function xF({
                   p.jsxs("div", {
                     className: "flex items-center justify-center gap-2 text-sage-dark/70",
                     children: [
-                      p.jsx(UA, { className: "w-4 h-4" }),
-                      p.jsxs("span", {
-                        className: "font-body text-sm font-semibold",
-                        children: ["From ", r, " to ", s],
+                      p.jsx(UA, { className: "w-4 h-4 flex-shrink-0" }),
+                      p.jsxs("div", {
+                        className: "font-body text-sm font-semibold flex flex-col items-center leading-relaxed",
+                        children: [
+                          p.jsxs("span", { children: ["From ", r] }),
+                          p.jsxs("span", { children: ["to ", s] }),
+                        ],
                       }),
                     ],
                   }),
