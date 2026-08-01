@@ -22013,6 +22013,32 @@ function xF({
         className: "flex flex-col items-center px-4",
         children: [
           p.jsxs("div", {
+            className: "relative w-full max-w-md md:max-w-lg mx-auto mb-6 mt-4 overflow-hidden rounded-2xl border-2 border-amber-500/40 shadow-2xl group cursor-pointer",
+            children: [
+              p.jsx("img", {
+                src: "./assets/venue-image.png",
+                alt: "Rehana Garden Venue",
+                className: "w-full h-[280px] sm:h-[340px] md:h-[400px] object-cover transition-transform duration-700 group-hover:scale-105",
+              }),
+              p.jsx("div", {
+                className: "absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-90",
+              }),
+              p.jsxs("div", {
+                className: "absolute bottom-0 inset-x-0 p-5 text-center text-white z-10",
+                children: [
+                  p.jsx("span", {
+                    className: "text-xs sm:text-sm uppercase tracking-[0.3em] font-body text-amber-300 font-semibold block mb-1 drop-shadow",
+                    children: "Wedding Venue",
+                  }),
+                  p.jsx("h4", {
+                    className: "font-serif text-2xl sm:text-3xl md:text-4xl font-bold tracking-wide drop-shadow-md text-white",
+                    children: a,
+                  }),
+                ],
+              }),
+            ],
+          }),
+          p.jsxs("div", {
             className: "relative w-[440px] md:w-[540px] aspect-[5/6] flex items-center justify-center",
             children: [
               p.jsx("img", {
