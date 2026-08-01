@@ -31380,7 +31380,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
     }),
   YC = "./assets/intro-video-Dhn3t98e.mp4",
   JC = "./assets/intro-poster-BaLFALiu.jpg",
-  mB = ({ onEnter: e, onInteraction: t }) => {
+  mB = ({ onEnter: e, onInteraction: t, onReveal: R }) => {
     const [n, r] = v.useState("idle"),
       s = v.useRef(null),
       w = v.useRef(null);
@@ -31415,6 +31415,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
       },
       l = () => {
         r("reveal");
+        R == null || R();
         const u = w.current;
         u && u.play().catch(() => { r("fading"); });
       },
@@ -31606,7 +31607,7 @@ const MB = () => {
         "aria-label": r ? "Unmute" : "Mute",
         children: r ? p.jsx(ZA, { size: 20 }) : p.jsx(XA, { size: 20 }),
       }),
-      t && p.jsx(mB, { onEnter: () => { n(!1); o(); }, onInteraction: uA }),
+      t && p.jsx(mB, { onEnter: () => { n(!1); o(); }, onInteraction: uA, onReveal: o }),
       p.jsxs("main", {
         className: "bg-background",
         children: [
