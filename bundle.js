@@ -31611,21 +31611,8 @@ const MB = () => {
     [r, s] = v.useState(!1),
     i = v.useRef(null);
   (v.useEffect(() => {
-    i.current &&
-      ((i.current.volume = 0),
-      i.current
-        .play()
-        .then(() => {
-          let c = 0;
-          const u = setInterval(() => {
-            ((c += 0.017), c >= 0.5 ? ((i.current.volume = 0.5), clearInterval(u)) : (i.current.volume = c));
-          }, 100);
-        })
-        .catch(() => {}));
-  }, []),
-    v.useEffect(() => {
       const c = () => {
-        i.current && (document.hidden ? i.current.pause() : r || i.current.play().catch(() => {}));
+        i.current && (document.hidden ? i.current.pause() : (!t && !r) && i.current.play().catch(() => {}));
       };
       return (
         document.addEventListener("visibilitychange", c),
@@ -31633,9 +31620,17 @@ const MB = () => {
           document.removeEventListener("visibilitychange", c);
         }
       );
-    }, [r]));
+    }, [r, t]));
   const o = () => {
-      i.current && i.current.paused && i.current.play().catch(() => {});
+      if (i.current && i.current.paused) {
+        i.current.volume = 0;
+        i.current.play().then(() => {
+          let c = 0;
+          const u = setInterval(() => {
+            ((c += 0.017), c >= 0.5 ? ((i.current.volume = 0.5), clearInterval(u)) : (i.current.volume = c));
+          }, 100);
+        }).catch(() => {});
+      }
     },
     a = () => {
       i.current && ((i.current.muted = !i.current.muted), s(!r));
