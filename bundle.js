@@ -30977,10 +30977,6 @@ function cB() {
         E({ title: "Name required", description: "Please enter your full name.", variant: "destructive" });
         return;
       }
-      if (!o.trim()) {
-        E({ title: "Phone required", description: "Please enter a contact phone number.", variant: "destructive" });
-        return;
-      }
       if (n === "yes" && h.filter((D) => !D.name.trim()).length > 0) {
         E({ title: "Names required", description: "Please enter the name of all companions.", variant: "destructive" });
         return;
@@ -30988,14 +30984,14 @@ function cB() {
       try {
         (await S.mutateAsync({
           full_name: s.trim(),
-          phone: o.trim(),
+          phone: o.trim() || "N/A",
           attendance: n,
           guest_count: 1 + h.length,
-          accommodation: (n === "yes" && l.trim()) || void 0,
-          needs_transport: n === "yes" ? u : !1,
+          accommodation: void 0,
+          needs_transport: !1,
           companions: h,
           song_request: (n === "yes" && x.trim()) || void 0,
-          dietary_requirements: (n === "yes" && b.trim()) || void 0,
+          dietary_requirements: void 0,
           message: y.trim() || void 0,
         }),
           t(!0));
@@ -31089,49 +31085,6 @@ function cB() {
             }),
             p.jsx(Hr, {
               children:
-                n === "yes" &&
-                p.jsxs(X.div, {
-                  initial: { opacity: 0, height: 0 },
-                  animate: { opacity: 1, height: "auto" },
-                  exit: { opacity: 0, height: 0 },
-                  transition: { duration: 0.3 },
-                  className: "overflow-hidden",
-                  children: [
-                    p.jsx(st, {
-                      htmlFor: "allergies",
-                      className: "text-sage-dark font-medium",
-                      children: "Allergies or dietary requirements",
-                    }),
-                    p.jsx(sn, {
-                      id: "allergies",
-                      value: b,
-                      onChange: (N) => m(N.target.value),
-                      className:
-                        "mt-2 bg-ivory border-sage/30 text-sage-dark placeholder:text-sage-dark/50 focus:border-sage-dark",
-                      placeholder: "e.g. gluten-free, lactose intolerant...",
-                      maxLength: 300,
-                    }),
-                  ],
-                }),
-            }),
-            p.jsxs("div", {
-              children: [
-                p.jsx(st, { htmlFor: "phone", className: "text-sage-dark font-medium", children: "Contact phone *" }),
-                p.jsx(sn, {
-                  id: "phone",
-                  type: "tel",
-                  required: !0,
-                  value: o,
-                  onChange: (N) => a(N.target.value),
-                  className:
-                    "mt-2 bg-ivory border-sage/30 text-sage-dark placeholder:text-sage-dark/50 focus:border-sage-dark",
-                  placeholder: "+44 7700 900000",
-                  maxLength: 20,
-                }),
-              ],
-            }),
-            p.jsx(Hr, {
-              children:
                 n === "no" &&
                 p.jsxs(X.div, {
                   initial: { opacity: 0, height: 0 },
@@ -31206,7 +31159,7 @@ function cB() {
                         p.jsx(st, { className: "text-sage-dark font-medium", children: "Companions" }),
                         p.jsx("p", {
                           className: "text-sm text-sage-dark/70 font-body",
-                          children: "Add the people joining you and note any allergies they may have.",
+                          children: "Add the people joining you.",
                         }),
                         h.length > 0 &&
                           p.jsxs("div", {
@@ -31259,14 +31212,6 @@ function cB() {
                                     "bg-white border-sage/30 text-sage-dark placeholder:text-sage-dark/50 focus:border-sage-dark",
                                   maxLength: 100,
                                 }),
-                                p.jsx(sn, {
-                                  value: N.allergies,
-                                  onChange: (D) => T(V, "allergies", D.target.value),
-                                  placeholder: "Allergies or dietary requirements (if any)",
-                                  className:
-                                    "bg-white border-sage/30 text-sage-dark placeholder:text-sage-dark/50 focus:border-sage-dark",
-                                  maxLength: 200,
-                                }),
                               ],
                             },
                             V,
@@ -31292,41 +31237,6 @@ function cB() {
                               children: [p.jsx(Id, { className: "w-3 h-3" }), " Child"],
                             }),
                           ],
-                        }),
-                      ],
-                    }),
-                    p.jsxs("div", {
-                      className: "flex items-center space-x-3",
-                      children: [
-                        p.jsx(QC, {
-                          id: "transport",
-                          checked: u,
-                          onCheckedChange: (N) => d(N === !0),
-                          className:
-                            "border-sage-dark data-[state=checked]:bg-sage-dark data-[state=checked]:border-sage-dark",
-                        }),
-                        p.jsx(st, {
-                          htmlFor: "transport",
-                          className: "cursor-pointer text-sage-dark",
-                          children: "I need transport to the venue",
-                        }),
-                      ],
-                    }),
-                    p.jsxs("div", {
-                      children: [
-                        p.jsx(st, {
-                          htmlFor: "accommodation",
-                          className: "text-sage-dark font-medium",
-                          children: "Hotel / Accommodation / Area",
-                        }),
-                        p.jsx(sn, {
-                          id: "accommodation",
-                          value: l,
-                          onChange: (N) => c(N.target.value),
-                          className:
-                            "mt-2 bg-ivory border-sage/30 text-sage-dark placeholder:text-sage-dark/50 focus:border-sage-dark",
-                          placeholder: "e.g. Hotel near Rehana Garden...",
-                          maxLength: 200,
                         }),
                       ],
                     }),
