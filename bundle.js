@@ -21660,26 +21660,24 @@ function ScratchSealItem({ label: e, value: t, onScratch: w }) {
       l.save();
       l.beginPath();
       l.arc(c.width / 2, c.height / 2, c.width / 2 - 2, 0, Math.PI * 2);
-      const grad = l.createRadialGradient(c.width / 2, c.height / 2, 10, c.width / 2, c.height / 2, c.width / 2);
-      grad.addColorStop(0, "#fef08a");
-      grad.addColorStop(0.5, "#eab308");
+      const grad = l.createRadialGradient(c.width / 2 - 20, c.height / 2 - 20, 10, c.width / 2, c.height / 2, c.width / 2);
+      grad.addColorStop(0, "#fef9c3");
+      grad.addColorStop(0.3, "#fde047");
+      grad.addColorStop(0.7, "#eab308");
       grad.addColorStop(1, "#854d0e");
       l.fillStyle = grad;
       l.fill();
+      l.lineWidth = 3;
+      l.strokeStyle = "#ca8a04";
+      l.stroke();
+      l.beginPath();
+      l.arc(c.width / 2, c.height / 2, c.width / 2 - 12, 0, Math.PI * 2);
+      l.lineWidth = 1.5;
+      l.strokeStyle = "#fef08a";
+      l.stroke();
       l.restore();
     };
     drawDefaultSeal();
-    const u = new Image();
-    u.src = "./assets/gold-seal.png";
-    u.onload = () => {
-      l.clearRect(0, 0, c.width, c.height);
-      l.save();
-      l.beginPath();
-      l.arc(c.width / 2, c.height / 2, c.width / 2, 0, Math.PI * 2);
-      l.clip();
-      l.drawImage(u, 0, 0, c.width, c.height);
-      l.restore();
-    };
   }, []);
   v.useEffect(() => {
     if (r && w) w();
@@ -21703,34 +21701,37 @@ function ScratchSealItem({ label: e, value: t, onScratch: w }) {
     }
   };
   return p.jsxs("div", {
-    className: "relative flex flex-col items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-transparent border border-amber-500/30 select-none overflow-hidden transition-transform hover:scale-105",
+    className: "flex flex-col items-center justify-center group",
     children: [
       p.jsxs("div", {
-        className: "flex flex-col items-center justify-center text-center z-0 px-2",
+        className: "relative flex items-center justify-center w-24 h-24 md:w-28 md:h-28 rounded-full bg-ivory/90 border-2 border-amber-500/40 shadow-md select-none overflow-hidden transition-transform group-hover:scale-105",
         children: [
-          p.jsx("span", {
-            className: "text-[9px] md:text-[10px] tracking-[0.25em] uppercase text-foreground/80 font-body mb-1 drop-shadow-sm",
-            children: e,
+          p.jsx("div", {
+            className: "flex items-center justify-center text-center z-0 w-full h-full px-2",
+            children: p.jsx("span", {
+              className: "text-2xl md:text-3xl font-serif font-bold text-foreground tracking-wider drop-shadow",
+              children: t,
+            }),
           }),
-          p.jsx("span", {
-            className: "text-xl md:text-2xl font-serif font-bold text-foreground tracking-wide drop-shadow",
-            children: t,
+          p.jsx("canvas", {
+            ref: n,
+            width: 160,
+            height: 160,
+            className: "absolute inset-0 w-full h-full z-10 cursor-pointer touch-none transition-opacity duration-700 " + (r ? "opacity-0 pointer-events-none" : "opacity-100"),
+            onMouseDown: () => o(!0),
+            onMouseUp: () => o(!1),
+            onMouseLeave: () => o(!1),
+            onMouseMove: (c) => { i && d(c); },
+            onTouchStart: (c) => { o(!0); d(c); },
+            onTouchEnd: () => o(!1),
+            onTouchMove: (c) => { d(c); },
+            onClick: (c) => { d(c); a.current += 6; if (a.current > 15) s(!0); },
           }),
         ],
       }),
-      p.jsx("canvas", {
-        ref: n,
-        width: 160,
-        height: 160,
-        className: "absolute inset-0 w-full h-full z-10 cursor-pointer touch-none transition-opacity duration-700 " + (r ? "opacity-0 pointer-events-none" : "opacity-100"),
-        onMouseDown: () => o(!0),
-        onMouseUp: () => o(!1),
-        onMouseLeave: () => o(!1),
-        onMouseMove: (c) => { i && d(c); },
-        onTouchStart: (c) => { o(!0); d(c); },
-        onTouchEnd: () => o(!1),
-        onTouchMove: (c) => { d(c); },
-        onClick: (c) => { d(c); a.current += 6; if (a.current > 15) s(!0); },
+      p.jsx("span", {
+        className: "mt-2.5 text-xs md:text-sm tracking-[0.25em] uppercase text-foreground/80 font-body font-medium drop-shadow-sm",
+        children: e,
       }),
     ],
   });
