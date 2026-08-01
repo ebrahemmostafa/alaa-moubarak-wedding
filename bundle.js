@@ -21801,7 +21801,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
       }),
       p.jsxs("div", {
         className: "relative z-10 flex flex-col items-center text-center px-6",
-        style: { paddingTop: "115px" },
+        style: { paddingTop: "40px" },
         children: [
           p.jsx(X.p, {
             initial: { opacity: 0, y: 20 },
