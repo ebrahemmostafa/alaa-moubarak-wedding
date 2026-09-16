@@ -31596,7 +31596,7 @@ const MB = () => {
   return p.jsxs(p.Fragment, {
     children: [
       p.jsx(pB, {}),
-      p.jsx("video", { ref: i, src: XC, preload: "auto", loop: !0, style: { display: "none" } }),
+      p.jsx("audio", { ref: i, src: XC, preload: "auto", loop: !0 }),
       p.jsx("button", {
         onClick: a,
         className:
