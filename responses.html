@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>RSVP Responses — Mahmoud & Alaa</title>
+  <link rel="stylesheet" href="./responses.css">
+  <script type="module" src="./responses.js"></script>
+</head>
+<body>
+  <main>
+    <header><p class="eyebrow">Mahmoud & Alaa</p><h1>RSVP Responses</h1><p>Guest replies from your wedding invitation.</p><a href="./index.html">View invitation</a></header>
+    <section id="login-panel" class="panel" aria-labelledby="login-title">
+      <h2 id="login-title">Organizer sign in</h2>
+      <p>Use your existing Supabase admin account to view guest responses.</p>
+      <form id="login-form">
+        <label>Email<input id="email" type="email" autocomplete="username" required></label>
+        <label>Password<input id="password" type="password" autocomplete="current-password" required></label>
+        <button id="login-button" type="submit">Sign in</button>
+      </form>
+    </section>
+    <p id="status" role="status" aria-live="polite"></p>
+    <section id="dashboard" hidden>
+      <div class="toolbar"><p id="updated">Responses refresh every 30 seconds.</p><button id="refresh" type="button">Refresh</button><button id="sign-out" type="button">Sign out</button></div>
+      <div class="stats" aria-label="Response totals">
+        <div class="panel"><span>Replies</span><strong id="total">0</strong></div>
+        <div class="panel"><span>Attending</span><strong id="attending">0</strong></div>
+        <div class="panel"><span>Declined</span><strong id="declined">0</strong></div>
+        <div class="panel"><span>Expected guests</span><strong id="guests">0</strong></div>
+      </div>
+      <div class="toolbar"><label>Search<input id="search" type="search" placeholder="Name, phone, message…"></label><label>Attendance<select id="attendance"><option value="all">All replies</option><option value="yes">Attending</option><option value="no">Declined</option><option value="pending">Pending</option></select></label></div>
+      <p id="count"></p>
+      <div class="table-wrap panel"><table><caption class="sr-only">Wedding RSVP responses</caption><thead><tr><th scope="col">Guest</th><th scope="col">Attendance</th><th scope="col">Party size</th><th scope="col">Companions</th><th scope="col">Song request</th><th scope="col">Message / requirements</th><th scope="col">Responded</th></tr></thead><tbody id="responses"></tbody></table><p id="empty" hidden>No responses yet.</p></div>
+    </section>
+  </main>
+</body>
+</html>

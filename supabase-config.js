@@ -1,0 +1,2 @@
+export const SUPABASE_URL = "https://fozoivthiepvjqwostae.supabase.co";
+export const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvem9pdnRoaWVwdmpxd29zdGFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODEzNTYsImV4cCI6MjA5MTA1NzM1Nn0.3AdyExyuQNGnRcXVqtjeAfEs505IRelfnvRIurd3Zhs";
