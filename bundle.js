@@ -31442,7 +31442,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
           ref: w,
           src: "./assets/reveal_video.mp4",
           className: "absolute inset-0 h-full w-full object-cover pointer-events-none",
-          style: { opacity: n === "reveal" || n === "fading" ? 1 : 0 },
+          style: { opacity: n === "reveal" ? 1 : 0 },
           onEnded: g,
           playsInline: !0,
           controls: !1,
@@ -31452,7 +31452,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
           muted: !0,
           preload: "auto",
         }),
-        (n === "idle" || n === "loading") &&
+        (n === "idle" || n === "loading" || n === "fading") &&
           p.jsx("img", {
             src: JC,
             alt: "Invitation",
