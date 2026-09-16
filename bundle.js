@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from "./supabase-config.js";
+import { SUPABASE_URL, SUPABASE_ANON_KEY, RSVP_TABLE } from "./supabase-config.js";
 var Wg = (e) => {
   throw TypeError(e);
 };
@@ -29758,8 +29758,11 @@ E4() &&
   console.warn(
     "⚠️  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217",
   );
-const _4 = SUPABASE_URL, C4 = SUPABASE_ANON_KEY,
+const _4 = "https://fozoivthiepvjqwostae.supabase.co",
+  C4 =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZvem9pdnRoaWVwdmpxd29zdGFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU0ODEzNTYsImV4cCI6MjA5MTA1NzM1Nn0.3AdyExyuQNGnRcXVqtjeAfEs505IRelfnvRIurd3Zhs",
   Ct = S4(_4, C4, { auth: { storage: localStorage, persistSession: !0, autoRefreshToken: !0 } });
+const weddingRsvpClient = S4(SUPABASE_URL, SUPABASE_ANON_KEY, { auth: { persistSession: false, autoRefreshToken: false } });
 function k4() {
   return $m({
     queryKey: ["faqs"],
@@ -30712,7 +30715,7 @@ function sB() {
   return $m({
     queryKey: ["guests"],
     queryFn: async () => {
-      const { data: e, error: t } = await Ct.from("guests").select("*").order("created_at", { ascending: !1 });
+      const { data: e, error: t } = await weddingRsvpClient.from(RSVP_TABLE).select("*").order("created_at", { ascending: !1 });
       if (t) throw t;
       return e;
     },
@@ -30722,7 +30725,7 @@ function iB() {
   const e = Fu();
   return MS({
     mutationFn: async (t) => {
-      const { data: n } = await Ct.from("guests").select("id").ilike("full_name", t.full_name).maybeSingle(),
+      const { data: n } = await weddingRsvpClient.from(RSVP_TABLE).select("id").ilike("full_name", t.full_name).maybeSingle(),
         r = {
           attendance: t.attendance,
           guest_count: t.guest_count,
@@ -30737,11 +30740,11 @@ function iB() {
           responded_at: new Date().toISOString(),
         };
       if (n) {
-        const { data: s, error: i } = await Ct.from("guests").update(r).eq("id", n.id).select().single();
+        const { data: s, error: i } = await weddingRsvpClient.from(RSVP_TABLE).update(r).eq("id", n.id).select().single();
         if (i) throw i;
         return { data: s, isUpdate: !0 };
       } else {
-        const { data: s, error: i } = await Ct.from("guests")
+        const { data: s, error: i } = await weddingRsvpClient.from(RSVP_TABLE)
           .insert({ full_name: t.full_name, ...r })
           .select()
           .single();
@@ -30758,7 +30761,7 @@ function oB() {
   const e = Fu();
   return MS({
     mutationFn: async (t) => {
-      const { error: n } = await Ct.from("guests").delete().eq("id", t);
+      const { error: n } = await weddingRsvpClient.from(RSVP_TABLE).delete().eq("id", t);
       if (n) throw n;
     },
     onSuccess: () => {

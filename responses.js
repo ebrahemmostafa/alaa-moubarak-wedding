@@ -1,4 +1,4 @@
-import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
+import { SUPABASE_URL, SUPABASE_ANON_KEY, RSVP_TABLE } from './supabase-config.js';
 
 const $ = (id) => document.getElementById(id);
 let rows = [];
@@ -11,7 +11,7 @@ function status(message, error = false) {
 
 async function request(path) {
   const response = await fetch(`${SUPABASE_URL}${path}`, {
-    headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
+    headers: { apikey: SUPABASE_ANON_KEY },
     signal: AbortSignal.timeout(15000),
     cache: 'no-store',
   });
@@ -60,7 +60,7 @@ async function load() {
     // Fetch every page; Supabase may cap each response at 1,000 rows.
     const collected = [];
     for (let offset = 0; ; offset += 500) {
-      const page = await request(`/rest/v1/guests?select=*&responded_at=not.is.null&order=responded_at.desc,id.desc&limit=500&offset=${offset}`);
+      const page = await request(`/rest/v1/${RSVP_TABLE}?select=*&responded_at=not.is.null&order=responded_at.desc,id.desc&limit=500&offset=${offset}`);
       collected.push(...page);
       if (page.length < 500) break;
     }
@@ -69,7 +69,7 @@ async function load() {
     $('updated').textContent = `Updated ${new Date().toLocaleTimeString()} · Refreshes every 30 seconds`;
     status('');
   } catch (error) {
-    status(`Could not refresh responses: ${error.message} Check that the guests table permits public reads, then try Refresh.`, true);
+    status(`Could not refresh responses: ${error.message} Check that the RSVP table permits public reads, then try Refresh.`, true);
   } finally {
     loading = false;
     $('refresh').disabled = false;

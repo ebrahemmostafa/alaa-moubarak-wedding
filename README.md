@@ -43,15 +43,22 @@ This archive contains the **complete deployed source** of the site as it exists 
 
 Open `responses.html` on the same static host as `index.html` to view submitted
 RSVPs. Anyone with the page link can view responses without signing in.
-The page reads the existing `guests` table and shows only rows with a
+The page reads `wedding_rsvp_responses` in your Supabase project
+`jcuqwcwkowtjxcykstlf` and shows only rows with a
 `responded_at` timestamp. Search, attendance filters, party totals, companion
 details, and automatic refresh every 30 seconds are included.
 
-Both pages use `supabase-config.js` for the existing project URL and public anon
-key. Guest submissions still use the original form and database save logic.
-Database row-level security must permit the public `anon` role to read `guests`.
-No database policies are changed by this update. Never place
-a Supabase service-role key in these browser files.
+Both pages use `supabase-config.js` for your project URL, public publishable key,
+and RSVP table name. Guest submissions use the original form and save logic,
+with a separate Supabase client for the new wedding table. The original
+database remains intact; unrelated FAQ and legacy admin queries retain their
+original connection. Old RSVP records are not migrated or modified.
+
+`supabase/wedding-rsvp.sql` records the setup applied to the new table only.
+Row-level security permits public reads, submissions, and updates so guests can
+revise their RSVP as before. Public deletion is not granted. The script fails
+if the table already exists, preventing accidental modification on reruns.
+Never place a Supabase secret or service-role key in these browser files.
 
 ### Local server
 
