@@ -31395,17 +31395,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
     const i = () => {
         if (n !== "idle") return;
         t == null || t();
-        const u = s.current;
-        u &&
-          (r("loading"),
-          u
-            .play()
-            .then(() => {
-              r("playing");
-            })
-            .catch(() => {
-              r("idle");
-            }));
+        r("fading");
       },
       o = () => {
         n === "loading" && r("playing");
