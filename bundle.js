@@ -31519,7 +31519,7 @@ const yB = "./assets/hero-illustration-BQEp2DxL.jpg",
   RB = "./assets/footer-bg-new-CQ33XzYQ.jpg",
   PB = "./assets/rings-illustration-LjMzScCM.png",
   AB = "./assets/monogram-mj-F-9vDsNY.png",
-  XC = "./assets/intro-music-CzqJOUtA.mp3",
+  XC = "./assets/intro-audio-video.mp4",
   NB = [JC],
   jB = [yB, vB, wB, xB, bB, SB, A_, N_, EB, _B, CB, kB, gC, TB, RB, PB, AB],
   OB = [YC, XC],
@@ -31605,7 +31605,7 @@ const MB = () => {
         "aria-label": r ? "Unmute" : "Mute",
         children: r ? p.jsx(ZA, { size: 20 }) : p.jsx(XA, { size: 20 }),
       }),
-      t && p.jsx(mB, { onEnter: () => { n(!1); o(); }, onInteraction: uA, onReveal: o }),
+      t && p.jsx(mB, { onEnter: () => { n(!1); }, onInteraction: () => { uA(); o(); }, onReveal: () => {} }),
       p.jsxs("main", {
         className: "bg-background",
         children: [
