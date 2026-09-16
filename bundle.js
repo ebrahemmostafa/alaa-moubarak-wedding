@@ -21764,6 +21764,10 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
     el.setAttribute("muted", "");
     el.setAttribute("playsinline", "");
     el.setAttribute("webkit-playsinline", "true");
+    if (s) {
+      el.pause();
+      return;
+    }
     const tryPlay = () => {
       if (el.paused) {
         el.play().catch(() => {});
@@ -21778,7 +21782,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
       window.removeEventListener("click", tryPlay);
       window.removeEventListener("scroll", tryPlay);
     };
-  }, []);
+  }, [s]);
   return p.jsxs("section", {
     className: "relative min-h-screen flex items-start justify-center pt-[42vh] overflow-hidden bg-ivory",
     children: [
@@ -21788,7 +21792,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
           ref: vRef,
           src: P_,
           poster: fF,
-          autoPlay: !0,
+          autoPlay: !s,
           muted: !0,
           loop: !0,
           playsInline: !0,
@@ -21796,7 +21800,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
           "webkit-playsinline": "true",
           "x5-playsinline": "true",
           disablePictureInPicture: !0,
-          preload: "auto",
+          preload: s ? "metadata" : "auto",
           className: "w-full h-full object-cover object-center pointer-events-none",
         }),
       }),
@@ -31386,53 +31390,80 @@ const fB = "./assets/watermark-DICa3eBu.png",
       w = v.useRef(null);
     v.useEffect(() => {
       const u = s.current;
-      u && ((u.preload = "auto"), u.load());
+      if (u) {
+        u.muted = !0;
+        u.defaultMuted = !0;
+        u.playsInline = !0;
+        u.setAttribute("muted", "");
+        u.setAttribute("playsinline", "");
+        u.setAttribute("webkit-playsinline", "true");
+        u.preload = "auto";
+        u.load();
+      }
     }, []);
     v.useEffect(() => {
       const u = w.current;
-      u && ((u.preload = "metadata"), u.load());
+      if (u) {
+        u.muted = !0;
+        u.defaultMuted = !0;
+        u.playsInline = !0;
+        u.setAttribute("muted", "");
+        u.setAttribute("playsinline", "");
+        u.setAttribute("webkit-playsinline", "true");
+        u.preload = "metadata";
+        u.load();
+      }
     }, []);
     const i = () => {
         if (n !== "idle") return;
         t == null || t();
         const u = s.current;
         u &&
-          (r("playing"),
-          w.current && ((w.current.preload = "auto"), w.current.load()),
+          (r("starting"),
           u
             .play()
             .catch(() => {
-              r("idle");
-            }));
+              r("fallback");
+            }),
+          w.current && (w.current.preload = "auto"));
+      },
+      o = () => {
+        r("playing");
       },
       a = () => {
-        r("idle");
+        n !== "idle" && r("fallback");
       },
       l = () => {
+        // Keep the last envelope frame until the reveal actually starts.
+        r("preparing-reveal");
+        const u = w.current;
+        u ? u.play().catch(() => { r("fallback"); }) : r("fallback");
+      },
+      h = () => {
         r("reveal");
         R == null || R();
-        const u = w.current;
-        u && u.play().catch(() => { r("fading"); });
+      },
+      b = () => {
+        (n === "preparing-reveal" || n === "reveal") && r("fallback");
       },
       g = () => {
         r("fading");
       },
-      c = () => {
-        n === "fading" && e();
-      };
+      c = n === "fading" || n === "fallback";
     return p.jsxs(X.div, {
       className: "fixed inset-0 z-50 cursor-pointer bg-ivory",
       onClick: i,
-      animate: { opacity: n === "fading" ? 0 : 1 },
-      transition: { duration: n === "fading" ? 1.5 : 0, ease: "easeInOut" },
-      onAnimationComplete: () => { n === "fading" && e(); },
+      animate: { opacity: c ? 0 : 1 },
+      transition: { duration: c ? 1.5 : 0, ease: "easeInOut" },
+      onAnimationComplete: () => { c && e(); },
       children: [
         p.jsx("video", {
           ref: s,
           src: YC,
           poster: JC,
           className: "absolute inset-0 h-full w-full object-cover pointer-events-none",
-          style: { opacity: n === "playing" ? 1 : 0 },
+          style: { opacity: n === "playing" || n === "preparing-reveal" ? 1 : 0 },
+          onPlaying: o,
           onEnded: l,
           onError: a,
           playsInline: !0,
@@ -31448,7 +31479,9 @@ const fB = "./assets/watermark-DICa3eBu.png",
           src: "./assets/reveal_video.mp4",
           className: "absolute inset-0 h-full w-full object-cover pointer-events-none",
           style: { opacity: n === "reveal" || n === "fading" ? 1 : 0 },
+          onPlaying: h,
           onEnded: g,
+          onError: b,
           playsInline: !0,
           controls: !1,
           "webkit-playsinline": "true",
@@ -31457,7 +31490,7 @@ const fB = "./assets/watermark-DICa3eBu.png",
           muted: !0,
           preload: "metadata",
         }),
-        n === "idle" &&
+        (n === "idle" || n === "starting" || n === "fallback") &&
           p.jsx("img", {
             src: JC,
             alt: "Invitation",
