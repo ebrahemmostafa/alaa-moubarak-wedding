@@ -42,17 +42,15 @@ This archive contains the **complete deployed source** of the site as it exists 
 ## RSVP responses
 
 Open `responses.html` on the same static host as `index.html` to view submitted
-RSVPs. Sign in with an existing Supabase account that has an `admin` entry in
-`user_roles` (the same role used by the invitation's existing admin dashboard).
+RSVPs. Anyone with the page link can view responses without signing in.
 The page reads the existing `guests` table and shows only rows with a
 `responded_at` timestamp. Search, attendance filters, party totals, companion
 details, and automatic refresh every 30 seconds are included.
 
 Both pages use `supabase-config.js` for the existing project URL and public anon
 key. Guest submissions still use the original form and database save logic.
-The responses page keeps its login session in memory; reload requires sign-in.
-Database row-level security must permit admins to read `guests` and their own
-`user_roles` entry. No database policies are changed by this update. Never place
+Database row-level security must permit the public `anon` role to read `guests`.
+No database policies are changed by this update. Never place
 a Supabase service-role key in these browser files.
 
 ### Local server

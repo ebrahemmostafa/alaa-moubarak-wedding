@@ -1,35 +1,23 @@
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './supabase-config.js';
 
 const $ = (id) => document.getElementById(id);
-let session = null;
 let rows = [];
 let loading = false;
-let generation = 0;
 
 function status(message, error = false) {
   $('status').textContent = message;
   $('status').classList.toggle('error', error);
 }
 
-async function request(path, options = {}, token = session?.access_token) {
+async function request(path) {
   const response = await fetch(`${SUPABASE_URL}${path}`, {
-    ...options,
-    headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${token || SUPABASE_ANON_KEY}`, 'Content-Type': 'application/json', ...options.headers },
+    headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` },
     signal: AbortSignal.timeout(15000),
     cache: 'no-store',
   });
   const data = await response.json();
   if (!response.ok) throw new Error(data.msg || data.message || data.error_description || 'Supabase request failed.');
   return data;
-}
-
-function reset() {
-  generation++;
-  session = null;
-  rows = [];
-  $('responses').replaceChildren();
-  $('dashboard').hidden = true;
-  $('login-panel').hidden = false;
 }
 
 function cell(text, detail) {
@@ -65,21 +53,14 @@ function render() {
 }
 
 async function load() {
-  if (!session || loading) return;
-  const current = generation;
+  if (loading) return;
   loading = true;
   $('refresh').disabled = true;
   try {
-    if (session.expires_at <= Date.now() / 1000 + 60) {
-      const refreshed = await request('/auth/v1/token?grant_type=refresh_token', { method: 'POST', body: JSON.stringify({ refresh_token: session.refresh_token }) });
-      if (current !== generation) return;
-      session = { ...refreshed, expires_at: Date.now() / 1000 + refreshed.expires_in };
-    }
     // Fetch every page; Supabase may cap each response at 1,000 rows.
     const collected = [];
     for (let offset = 0; ; offset += 500) {
       const page = await request(`/rest/v1/guests?select=*&responded_at=not.is.null&order=responded_at.desc,id.desc&limit=500&offset=${offset}`);
-      if (current !== generation) return;
       collected.push(...page);
       if (page.length < 500) break;
     }
@@ -88,43 +69,17 @@ async function load() {
     $('updated').textContent = `Updated ${new Date().toLocaleTimeString()} · Refreshes every 30 seconds`;
     status('');
   } catch (error) {
-    if (current === generation) status(`Could not refresh responses: ${error.message} Check the admin account and the guests table permissions, then try Refresh.`, true);
+    status(`Could not refresh responses: ${error.message} Check that the guests table permits public reads, then try Refresh.`, true);
   } finally {
     loading = false;
     $('refresh').disabled = false;
   }
 }
 
-$('login-form').addEventListener('submit', async (event) => {
-  event.preventDefault();
-  $('login-button').disabled = true;
-  status('Signing in…');
-  try {
-    const signedIn = await request('/auth/v1/token?grant_type=password', { method: 'POST', body: JSON.stringify({ email: $('email').value.trim(), password: $('password').value }) });
-    const roles = await request(`/rest/v1/user_roles?select=role&user_id=eq.${encodeURIComponent(signedIn.user.id)}&role=eq.admin`, {}, signedIn.access_token);
-    if (!roles.length) throw new Error('This account does not have the existing admin role.');
-    session = { ...signedIn, expires_at: Date.now() / 1000 + signedIn.expires_in };
-    generation++;
-    $('password').value = '';
-    $('login-panel').hidden = true;
-    $('dashboard').hidden = false;
-    status('Loading responses…');
-    await load();
-  } catch (error) {
-    reset();
-    status(`Could not sign in: ${error.message}`, true);
-  } finally {
-    $('login-button').disabled = false;
-  }
-});
-$('sign-out').addEventListener('click', async () => {
-  const token = session?.access_token;
-  reset();
-  status('Signed out.');
-  try { await request('/auth/v1/logout', { method: 'POST' }, token); } catch { /* Local session is already cleared. */ }
-});
 $('refresh').addEventListener('click', load);
 $('search').addEventListener('input', render);
 $('attendance').addEventListener('change', render);
 setInterval(() => { if (!document.hidden) load(); }, 30000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) load(); });
+status('Loading responses…');
+load();
