@@ -31390,25 +31390,20 @@ const fB = "./assets/watermark-DICa3eBu.png",
     }, []);
     v.useEffect(() => {
       const u = w.current;
-      u && ((u.preload = "auto"), u.load());
+      u && ((u.preload = "metadata"), u.load());
     }, []);
     const i = () => {
         if (n !== "idle") return;
         t == null || t();
         const u = s.current;
         u &&
-          (r("loading"),
+          (r("playing"),
+          w.current && ((w.current.preload = "auto"), w.current.load()),
           u
             .play()
-            .then(() => {
-              r("playing");
-            })
             .catch(() => {
               r("idle");
             }));
-      },
-      o = () => {
-        n === "loading" && r("playing");
       },
       a = () => {
         r("idle");
@@ -31435,9 +31430,9 @@ const fB = "./assets/watermark-DICa3eBu.png",
         p.jsx("video", {
           ref: s,
           src: YC,
+          poster: JC,
           className: "absolute inset-0 h-full w-full object-cover pointer-events-none",
           style: { opacity: n === "playing" ? 1 : 0 },
-          onPlaying: o,
           onEnded: l,
           onError: a,
           playsInline: !0,
@@ -31460,9 +31455,9 @@ const fB = "./assets/watermark-DICa3eBu.png",
           "x5-playsinline": "true",
           disablePictureInPicture: !0,
           muted: !0,
-          preload: "auto",
+          preload: "metadata",
         }),
-        (n === "idle" || n === "loading") &&
+        n === "idle" &&
           p.jsx("img", {
             src: JC,
             alt: "Invitation",
@@ -31480,15 +31475,6 @@ const fB = "./assets/watermark-DICa3eBu.png",
               "absolute bottom-16 inset-x-0 text-center text-white/70 text-xs font-body tracking-[0.25em] uppercase pointer-events-none",
             style: { textShadow: "0 1px 4px rgba(0,0,0,0.3)" },
             children: "Tap to open",
-          }),
-        n === "loading" &&
-          p.jsx(X.p, {
-            initial: { opacity: 0 },
-            animate: { opacity: 1 },
-            className:
-              "absolute bottom-16 inset-x-0 text-center text-white/70 text-xs font-body tracking-[0.25em] uppercase pointer-events-none",
-            style: { textShadow: "0 1px 4px rgba(0,0,0,0.3)" },
-            children: "Loading…",
           }),
       ],
     });
@@ -31524,7 +31510,7 @@ const yB = "./assets/hero-illustration-BQEp2DxL.jpg",
   XC = "./assets/intro-audio-video.mp4",
   NB = [JC],
   jB = [yB, vB, wB, xB, bB, SB, A_, N_, EB, _B, CB, kB, gC, TB, RB, PB, AB],
-  OB = [YC, XC],
+  OB = [XC],
   IB = [P_];
 function _w(e) {
   const t = new Image();
