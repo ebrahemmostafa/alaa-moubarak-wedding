@@ -31597,7 +31597,7 @@ const MB = () => {
   return p.jsxs(p.Fragment, {
     children: [
       p.jsx(pB, {}),
-      p.jsx("audio", { ref: i, src: XC, preload: "auto", loop: !0 }),
+      p.jsx("video", { ref: i, src: XC, preload: "auto", loop: !0, style: { display: "none" } }),
       p.jsx("button", {
         onClick: a,
         className:
@@ -31605,7 +31605,7 @@ const MB = () => {
         "aria-label": r ? "Unmute" : "Mute",
         children: r ? p.jsx(ZA, { size: 20 }) : p.jsx(XA, { size: 20 }),
       }),
-      t && p.jsx(mB, { onEnter: () => { n(!1); }, onInteraction: () => { uA(); o(); }, onReveal: () => {} }),
+      t && p.jsx(mB, { onEnter: () => { n(!1); }, onInteraction: () => { o(); }, onReveal: () => {} }),
       p.jsxs("main", {
         className: "bg-background",
         children: [
