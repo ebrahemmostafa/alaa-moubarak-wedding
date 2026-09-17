@@ -31560,6 +31560,10 @@ const MB = () => {
         }).catch(() => {});
       }
     },
+    fA = (ev) => {
+      const el = ev.currentTarget;
+      el.duration && el.currentTime >= el.duration - 4 && (el.currentTime = 0);
+    },
     o = () => {
       if (i.current && i.current.paused) {
         i.current.muted = r;
@@ -31587,7 +31591,7 @@ const MB = () => {
     };
   return p.jsxs(p.Fragment, {
     children: [
-      p.jsx("audio", { ref: i, src: XC, preload: "auto", loop: !0 }),
+      p.jsx("audio", { ref: i, src: XC, preload: "auto", onTimeUpdate: fA }),
       p.jsx("button", {
         onClick: a,
         className:
@@ -31595,7 +31599,7 @@ const MB = () => {
         "aria-label": r ? "Unmute" : "Mute",
         children: r ? p.jsx(ZA, { size: 20 }) : p.jsx(XA, { size: 20 }),
       }),
-      t && p.jsx(mB, { onEnter: () => { n(!1); o(); }, onInteraction: uA, onReveal: () => {} }),
+      t && p.jsx(mB, { onEnter: () => { n(!1); }, onInteraction: uA, onReveal: () => { o(); } }),
       p.jsxs("main", {
         className: "bg-background",
         children: [
