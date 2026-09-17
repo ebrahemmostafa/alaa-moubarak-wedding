@@ -31351,38 +31351,7 @@ function hB({ name1: e, name2: t, date: n }) {
     ],
   });
 }
-const fB = "./assets/watermark-DICa3eBu.png",
-  pB = () =>
-    p.jsxs("div", {
-      className: "fixed inset-0 pointer-events-none overflow-hidden",
-      style: { zIndex: 9999 },
-      children: [
-        p.jsx("div", {
-          className: "absolute",
-          style: {
-            width: "180px",
-            opacity: 0.8,
-            top: "50%",
-            left: "50%",
-            animation: "watermark-x 25s ease-in-out infinite, watermark-y 18s ease-in-out infinite",
-          },
-          children: p.jsx("img", { src: fB, alt: "", className: "w-full h-auto", draggable: !1 }),
-        }),
-        p.jsx("style", {
-          children: `
-        @keyframes watermark-x {
-          0%, 100% { transform: translateX(-80%); }
-          50% { transform: translateX(-20%); }
-        }
-        @keyframes watermark-y {
-          0%, 100% { top: 20%; }
-          50% { top: 75%; }
-        }
-      `,
-        }),
-      ],
-    }),
-  YC = "./assets/intro-video-Dhn3t98e.mp4",
+const YC = "./assets/intro-video-Dhn3t98e.mp4",
   JC = "./assets/intro-poster-BaLFALiu.jpg",
   mB = ({ onEnter: e, onInteraction: t, onReveal: R }) => {
     const [n, r] = v.useState("idle"),
@@ -31587,12 +31556,13 @@ const MB = () => {
         el.play().then(() => {
           el.pause();
           el.currentTime = 0;
-          el.muted = !1;
+          el.muted = r;
         }).catch(() => {});
       }
     },
     o = () => {
       if (i.current && i.current.paused) {
+        i.current.muted = r;
         i.current.volume = 0;
         i.current.play().then(() => {
           let c = 0;
@@ -31617,7 +31587,6 @@ const MB = () => {
     };
   return p.jsxs(p.Fragment, {
     children: [
-      p.jsx(pB, {}),
       p.jsx("audio", { ref: i, src: XC, preload: "auto", loop: !0 }),
       p.jsx("button", {
         onClick: a,
@@ -31626,7 +31595,7 @@ const MB = () => {
         "aria-label": r ? "Unmute" : "Mute",
         children: r ? p.jsx(ZA, { size: 20 }) : p.jsx(XA, { size: 20 }),
       }),
-      t && p.jsx(mB, { onEnter: () => { n(!1); }, onInteraction: () => { o(); }, onReveal: () => {} }),
+      t && p.jsx(mB, { onEnter: () => { n(!1); o(); }, onInteraction: uA, onReveal: () => {} }),
       p.jsxs("main", {
         className: "bg-background",
         children: [
