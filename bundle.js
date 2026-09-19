@@ -21850,7 +21850,7 @@ function mF({ name1: e, name2: t, date: n, subtitle: r, paused: s }) {
 }
 function gF(e) {
   const [t, n, r] = "2026-11-20".split("-").map(Number);
-  return Date.UTC(t, n - 1, r, 15, 0, 0);
+  return Date.UTC(t, n - 1, r, 16, 0, 0);
 }
 function yF({ targetDate: e }) {
   const [t, n] = v.useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -21958,15 +21958,15 @@ function xF({
   location: e = "Rehana Garden",
   address: t,
   mapsUrl: n,
-  startTime: r = "05:00 pm",
-  endTime: s = "11:00 pm",
+  startTime: r = "06:00 pm",
+  endTime: s = "10:00 pm",
   weddingDate: i,
 }) {
   const o = (c, u, d, h) => {
       const [f, x, g] = h.split("-").map(Number),
         y = (R) => R.toString().padStart(2, "0"),
-        w = `${f}${y(x)}${y(g)}T170000`,
-        S = `${f}${y(x)}${y(g)}T230000`,
+        w = `${f}${y(x)}${y(g)}T180000`,
+        S = `${f}${y(x)}${y(g)}T220000`,
         E = [
           "BEGIN:VCALENDAR",
           "VERSION:2.0",
@@ -22105,12 +22105,12 @@ function xF({
 }
 const A_ = "./assets/couple-dancing-D8lPNoP4.png",
   bF = [
-    { time: "5:00 PM", title: "Arrival & Welcome Drinks", description: "Reception and welcome cocktails at the villa" },
-    { time: "5:30 PM", title: "Ceremony", description: "The most special moment of the day" },
-    { time: "6:00 PM", title: "Cocktail Hour & Dinner", description: "Al fresco dining under the stars" },
-    { time: "9:30 PM", title: "Party", description: "Let's dance the night away!" },
+    { time: "6:00 PM", title: "Arrival & Welcome Drinks", description: "Reception and welcome cocktails at the villa" },
+    { time: "6:20 PM", title: "Ceremony", description: "The most special moment of the day" },
+    { time: "6:40 PM", title: "Cocktail Hour & Dinner", description: "Al fresco dining under the stars" },
+    { time: "9:00 PM", title: "Party", description: "Let's dance the night away!" },
     {
-      time: "11:00 PM",
+      time: "10:00 PM",
       title: "Last Dance",
       description: `Farewell and
 beautiful memories`,
@@ -30814,8 +30814,8 @@ function lB({ attendance: e }) {
         "VERSION:2.0",
         "PRODID:-//Ajwaa//Wedding//EN",
         "BEGIN:VEVENT",
-        "DTSTART;TZID=Europe/Rome:20261120T170000",
-        "DTEND;TZID=Europe/Rome:20261120T230000",
+        "DTSTART;TZID=Europe/Rome:20261120T180000",
+        "DTEND;TZID=Europe/Rome:20261120T220000",
         "SUMMARY:Mahmoud & Alaa's Wedding",
         "LOCATION:Rehana Garden",
         "DESCRIPTION:Mahmoud & Alaa's Wedding Celebration",
@@ -30885,7 +30885,7 @@ function lB({ attendance: e }) {
                         }),
                         p.jsx("p", {
                           className: "text-sage-dark/80 font-body text-base md:text-lg",
-                          children: "We look forward to seeing you on November 20th at 5:00 PM at Rehana Garden.",
+                          children: "We look forward to seeing you on November 20th at 6:00 PM at Rehana Garden.",
                         }),
                       ],
                     }),
@@ -31615,8 +31615,8 @@ const MB = () => {
             location: l.banquet_location,
             address: l.banquet_address,
             mapsUrl: l.banquet_maps_url,
-            startTime: "05:00 pm",
-            endTime: "11:00 pm",
+            startTime: "06:00 pm",
+            endTime: "10:00 pm",
             weddingDate: l.wedding_date,
           }),
           p.jsx(EF, {}),
